@@ -1,0 +1,11 @@
+name: Get Image
+on: workflow_dispatch:
+jobs:
+  save:
+    runs-on: ubuntu-latest
+    steps:
+      - run: docker pull nginx:stable-alpine && docker save -o nginx.tar nginx:stable-alpine
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nginx-image
+          path: nginx.tar
