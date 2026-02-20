@@ -1,11 +1,18 @@
 name: Get Image
-on: workflow_dispatch:
+on: 
+  workflow_dispatch: # 브라우저에서 버튼을 수동으로 누르기 위한 설정
+
 jobs:
   save:
     runs-on: ubuntu-latest
     steps:
-      - run: docker pull nginx:stable-alpine && docker save -o nginx.tar nginx:stable-alpine
-      - uses: actions/upload-artifact@v4
+      - name: Docker Pull and Save
+        run: |
+          docker pull nginx:stable-alpine
+          docker save -o nginx.tar nginx:stable-alpine
+      
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
         with:
           name: nginx-image
           path: nginx.tar
